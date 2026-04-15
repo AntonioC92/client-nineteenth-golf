@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nineteenth GC: Digital Audit Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:      #0D1F0F;
+    --primary-mid:  #1A3D1E;
+    --accent:       #B89A5A;
+    --accent-light: #D4B87A;
+    --neutral:      #E8E0D0;
+    --charcoal:     #2C2C2C;
+    --muted:        #6b7280;
+    --white:        #ffffff;
+    --bg:           #F2EDE4;
+
+    --critical-bg:  #fdf0f0;
+    --critical-text:#8b2020;
+    --critical-border:#c0392b;
+    --high-bg:      #fdf5e6;
+    --high-text:    #7B4F00;
+    --high-border:  #d4860a;
+    --medium-bg:    #f0f4fd;
+    --medium-text:  #1e3a7b;
+    --medium-border:#3a6bc4;
+    --low-bg:       #f3f3f3;
+    --low-text:     #4a4a4a;
+    --low-border:   #999999;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--charcoal);
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--primary);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 40px,
+      rgba(184,154,90,0.04) 40px,
+      rgba(184,154,90,0.04) 41px
+    );
+  }
+  .gold-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    width: 100%;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 48px 56px;
+    position: relative;
+  }
+  .brand-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(184,154,90,0.3);
+    max-width: 200px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .header-title span { color: var(--accent); }
+  .header-sub {
+    font-size: 15px;
+    color: var(--neutral);
+    opacity: 0.75;
+    margin-top: 14px;
+    font-weight: 300;
+  }
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .meta-value { font-size: 14px; color: var(--white); font-weight: 500; }
+
+  /* ── LAYOUT ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 64px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    opacity: 0.8;
+    min-width: 32px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.01em;
+  }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), rgba(184,154,90,0.1));
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 28px 32px;
+    border: 1px solid rgba(13,31,15,0.08);
+    box-shadow: 0 2px 12px rgba(13,31,15,0.05);
+    margin-bottom: 20px;
+  }
+  .card p {
+    font-size: 15px;
+    color: var(--charcoal);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+  .card p:last-child { margin-bottom: 0; }
+  .card p strong { color: var(--primary); }
+
+  /* ── EXECUTIVE SUMMARY PRIORITIES ── */
+  .priority-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .priority-list li {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 14px 20px;
+    border: 1px solid rgba(13,31,15,0.08);
+    font-size: 14px;
+    color: var(--charcoal);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    box-shadow: 0 1px 6px rgba(13,31,15,0.04);
+  }
+  .priority-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 24px;
+    margin-top: 1px;
+  }
+  .priority-list li strong { color: var(--primary); }
+
+  /* ── STATUS BADGE ── */
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .status-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .status-live    { background: #e8f5e9; color: #2E7D32; }
+  .status-missing { background: var(--critical-bg); color: var(--critical-text); }
+  .status-partial { background: var(--high-bg); color: var(--high-text); }
+  .status-functional { background: var(--medium-bg); color: var(--medium-text); }
+  .status-active  { background: #e8f5e9; color: #2E7D32; }
+  .status-subline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── FINDINGS LIST ── */
+  .findings-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .findings-list li {
+    font-size: 14px;
+    color: var(--charcoal);
+    padding: 9px 14px;
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid rgba(13,31,15,0.07);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.55;
+  }
+  .findings-list li::before {
+    content: '·';
+    color: var(--accent);
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── ISSUE TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(13,31,15,0.06);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    font-size: 14px;
+  }
+  thead tr { background: var(--primary); }
+  thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 500;
+  }
+  tbody tr { border-bottom: 1px solid rgba(13,31,15,0.06); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 13px 18px; vertical-align: top; line-height: 1.55; }
+  .td-sev { white-space: nowrap; }
+  .td-issue { font-weight: 500; color: var(--charcoal); }
+  .td-rec { color: var(--muted); font-size: 13px; }
+
+  /* ── SEVERITY PILLS ── */
+  .sev-pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .sev-critical { background: var(--critical-bg); color: var(--critical-text); border: 1px solid var(--critical-border); }
+  .sev-high     { background: var(--high-bg);     color: var(--high-text);     border: 1px solid var(--high-border); }
+  .sev-medium   { background: var(--medium-bg);   color: var(--medium-text);   border: 1px solid var(--medium-border); }
+  .sev-low      { background: var(--low-bg);       color: var(--low-text);      border: 1px solid var(--low-border); }
+
+  /* ── ROADMAP ── */
+  .roadmap-grid { display: flex; flex-direction: column; gap: 20px; }
+  .roadmap-block {
+    background: var(--white);
+    border-radius: 8px;
+    border: 1px solid rgba(13,31,15,0.07);
+    box-shadow: 0 2px 8px rgba(13,31,15,0.04);
+    overflow: hidden;
+  }
+  .roadmap-header {
+    background: var(--primary);
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .roadmap-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .roadmap-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: rgba(184,154,90,0.25);
+    color: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .roadmap-body { padding: 20px 28px; }
+  .roadmap-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+  @media (max-width: 640px) { .roadmap-list { grid-template-columns: 1fr; } }
+  .roadmap-list li {
+    font-size: 14px;
+    color: var(--charcoal);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .roadmap-list li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(13,31,15,0.06);
+  }
+  .checklist-wrap table tbody td:first-child {
+    font-weight: 500;
+    color: var(--primary);
+  }
+
+  /* ── CONTEXT GRID ── */
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 700px) { .context-grid { grid-template-columns: 1fr; } }
+  .context-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 24px 28px;
+    border: 1px solid rgba(13,31,15,0.07);
+    box-shadow: 0 2px 8px rgba(13,31,15,0.04);
+  }
+  .context-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .context-card p {
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .context-card p:last-child { margin-bottom: 0; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--primary);
+    padding: 20px 48px;
+    text-align: center;
+  }
+  .site-footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(232,224,208,0.5);
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 40px 24px 36px; }
+    .main { padding: 32px 24px 60px; }
+    .site-footer { padding: 18px 24px; }
+    .resp-grid, .context-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="gold-bar"></div>
+  <div class="header-inner">
+    <div class="brand-eyebrow">Nineteenth GC &nbsp;·&nbsp; Silverwater NSW</div>
+    <h1 class="header-title">Digital Audit<br><span>Report</span></h1>
+    <p class="header-sub">Website · Meta Pixel · Google Tags · SEO · Booking System · Conversion Journey · Facebook · Instagram</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Prepared by</span>
+        <span class="meta-value">Antonio &amp; Sean</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">14 April 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Domain audited</span>
+        <span class="meta-value">nineteenthgc.com</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Document type</span>
+        <span class="meta-value">Pre-campaign baseline audit</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- 01 EXECUTIVE SUMMARY -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Executive summary</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="card">
+      <p>This audit sets the baseline for Nineteenth Golf Club's digital presence before we switch on paid media. The site itself looks great, clean, modern, and working well on mobile.</p>
+
+      <p>The gap is underneath the surface, where the measurement and tracking layer is effectively unbuilt. There's no Google Analytics, no Google Tag Manager, no Google Ads conversion tag, no LocalBusiness schema, no verified Meta Pixel on the main domain, and no pixel instrumentation on the third-party booking platform that handles every paying customer.</p>
+
+      <p>In practical terms, every ad dollar spent today lands in a blind funnel. We can't see which campaign, creative, or keyword drove a booking. Getting the tracking and schema layer sorted is the highest-leverage thing we can do in Month 1, well ahead of any creative or bidding work.</p>
+
+      <p>Beyond tracking, there are three UX issues worth fixing quickly: pricing isn't visible on the public site, the booking flow hands off to an external domain with no branded return, and there's no post-booking email sequence to bring people back. All three are solvable within the first 30 days.</p>
+    </div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--primary);margin-bottom:12px;margin-top:32px;">Top 5 priorities</h3>
+    <ul class="priority-list">
+      <li><span class="priority-num">1</span><span><strong>Install GA4 + Google Tag Manager</strong> on the Framer site. Everything else depends on this.</span></li>
+      <li><span class="priority-num">2</span><span><strong>Install and verify Meta Pixel</strong> on nineteenthgc.com and fire a Lead event on Book Now clicks.</span></li>
+      <li><span class="priority-num">3</span><span><strong>Solve cross-domain booking tracking</strong> via a redirect or thank-you page, or Conversions API. Booking completions must be attributable.</span></li>
+      <li><span class="priority-num">4</span><span><strong>Add LocalBusiness JSON-LD schema + robots.txt/sitemap.xml</strong> to unlock local SEO and Google Business Profile visibility.</span></li>
+      <li><span class="priority-num">5</span><span><strong>Surface pricing on site</strong> and add testimonials and reviews. These are the two biggest friction points in the conversion journey.</span></li>
+    </ul>
+  </section>
+
+  <!-- 02 WEBSITE -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Website (nineteenthgc.com)</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-live">Live</span>
+      <span class="status-subline">Good foundation · Weak measurement layer</span>
+    </div>
+    <ul class="findings-list">
+      <li>Single-page structure with /pricing and /gallery subpages, all carrying a clean and modern design.</li>
+      <li>The viewport tag is present with responsive breakpoints at 810px and 1200px, and the mobile nav works as expected.</li>
+      <li>The hero has a video background, the headline "Your game. Your time.", a clear "Book your bay now" CTA, and the TRIAL25 offer code surfaced upfront.</li>
+      <li>The free session duration isn't specified anywhere in the hero, so visitors have no way of knowing if it's 30 minutes or an hour.</li>
+      <li>All lead capture is offsite, with no email capture, no enquiry form, and no newsletter sign-up anywhere on the site.</li>
+      <li>The stylesheet is inline rather than an external file, which has a minor effect on caching and load performance.</li>
+      <li>The hero image is 4608x2976 with srcset for responsive handling, and the video uses preload="auto", so LCP on slow connections is worth watching.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Pricing is not visible on the homepage. Users must click through to /pricing or enter the booking flow to see cost.</td>
+            <td class="td-rec">Add a three-tier price summary block on the homepage (single session, 10-pack, membership) directly under the hero.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">No trust signals on the homepage. No reviews, testimonials, or star ratings.</td>
+            <td class="td-rec">Embed a Google review widget or a 3-quote testimonial band above the footer, linked to the full Google Business Profile.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">"Free session" offer is ambiguous in duration.</td>
+            <td class="td-rec">Reword the hero CTA subhead: "Your first 30-minute session free with code TRIAL25".</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No on-site lead capture. Visitors who are not ready to book have no way to stay in touch.</td>
+            <td class="td-rec">Add an email capture unit ("Get 10% off your first booking") routing to Mailchimp, Klaviyo, or similar.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-low">Low</span></td>
+            <td class="td-issue">Inline CSS reduces browser caching efficiency.</td>
+            <td class="td-rec">Externalise global stylesheet once Framer permits. Non-urgent.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 META PIXEL -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Meta Pixel</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-missing">Not installed</span>
+      <span class="status-subline">Not verified on nineteenthgc.com · Definitely missing on the booking platform</span>
+    </div>
+    <ul class="findings-list">
+      <li>No fbq() initialisation block, no connect.facebook.net/en_US/fbevents.js script, and no 16-digit Pixel ID found in the homepage HTML.</li>
+      <li>There's a Facebook profile link in the footer, but that's a page link, not a pixel.</li>
+      <li>The entire booking flow (date, time, payment, confirmation) happens on yourgolfbooking.com, which is a completely separate domain. Nothing the main site pixel sees extends to what happens over there.</li>
+      <li>The agreed workaround is a redirect landing page so pixel events can fire on return. That page hasn't been built yet.</li>
+      <li>The practical result today is that every paid booking coming via Meta looks like a non-conversion. CPR and ROAS are completely unreadable.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">No verified Meta Pixel on the main domain.</td>
+            <td class="td-rec">Create Pixel in Meta Business Suite, install base code in Framer head, verify with Meta Pixel Helper. Fire PageView site-wide.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">Zero conversion visibility for bookings due to cross-domain break.</td>
+            <td class="td-rec">Implement the redirect: YGB confirmation page sends the visitor to nineteenthgc.com/thank-you?booking=1. Fire Purchase and Lead events on that page.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">No Conversions API fallback. iOS 17, ITP, and ad-blockers will suppress a meaningful percentage of browser pixel fires.</td>
+            <td class="td-rec">Stand up CAPI via Zapier, Stape.io, or direct webhook from YGB. Dedupe with the browser event via event_id.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">No Lead event on Book Now clicks.</td>
+            <td class="td-rec">Add fbq('track','Lead') on the click handler for every Book Now CTA. Used as a soft-conversion for mid-funnel campaigns.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No custom audiences can be built yet.</td>
+            <td class="td-rec">Once pixel is live, create audiences for all visitors (180d), pricing-page viewers, and Book Now clickers without purchase, ready for retargeting.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 04 GOOGLE TAGS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Google Tags (GA4, GTM, Google Ads)</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-missing">Not installed</span>
+      <span class="status-subline">Green-field install required across all Google products</span>
+    </div>
+    <ul class="findings-list">
+      <li>No GTM container, no GA4 measurement ID, no Google Ads conversion tag, and no legacy UA- tag found anywhere on the site.</li>
+      <li>This is a completely fresh install across all Google products, which is actually the cleanest scenario to work with.</li>
+      <li>The result is zero visibility into traffic sources, landing page performance, device mix, bounce rate, scroll depth, or campaign attribution.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">No GA4 property running.</td>
+            <td class="td-rec">Create GA4 property, install via GTM (not direct gtag), wire core events: page_view, book_now_click, external_click to YGB, phone_call, email_click.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">No Google Tag Manager container.</td>
+            <td class="td-rec">Create a GTM container. Add the GTM snippet to Framer site head and body. Manage Pixel, GA4, and Ads tags through GTM. Hard-coding tags directly should be avoided from this point forward.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">No Google Ads conversion tracking.</td>
+            <td class="td-rec">Create Google Ads account or link existing. Generate a Purchase conversion action. Fire it from the same /thank-you page used for the Pixel.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">No UTM taxonomy in use.</td>
+            <td class="td-rec">Define standard UTM conventions (source, medium, campaign, content) for every paid link and social bio link. Document in a shared sheet.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No Search Console property.</td>
+            <td class="td-rec">Verify nineteenthgc.com in Google Search Console via GTM or DNS. Connect to GA4 for query data.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 SEO -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">SEO (on-page, technical, local)</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-partial">Partial</span>
+      <span class="status-subline">Basics present · Local SEO layer missing</span>
+    </div>
+    <ul class="findings-list">
+      <li>The title tag reads "Nineteenth Golf Club", which is brand name only with no keywords, leaving real estate on the table.</li>
+      <li>The meta description is well-written and around 150 characters, which is a good length.</li>
+      <li>The canonical tag (https://nineteenthgc.com/) is present and correct, and OpenGraph and Twitter card tags are both in place.</li>
+      <li>robots.txt and sitemap.xml couldn't be retrieved on the audit date, so they're either absent or not published through Framer's default setup.</li>
+      <li>No Schema.org JSON-LD was detected anywhere on the site, meaning no LocalBusiness, GolfCourse, or Organization markup, which is the single biggest local SEO gap.</li>
+      <li>NAP (Name, Address, Phone) is consistent across the site and external listings: Unit 6/90-94 Carnarvon Street, Silverwater NSW 2128, +61 2 7245 3898, admin@nineteenthgc.com.</li>
+      <li>The Google Business Profile appears to exist (the venue shows in TrustIndex and ClassPass) but has low visibility and isn't the dominant result for brand searches.</li>
+      <li>With just three indexable pages (/, /pricing, /gallery), there's very little surface area for the site to compete on non-brand keywords.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">No LocalBusiness or SportsActivityLocation JSON-LD schema.</td>
+            <td class="td-rec">Add JSON-LD block with name, address, geo, openingHours (24/7), telephone, url, priceRange, image, sameAs (IG/FB URLs). This is the lever for Local Pack and knowledge panel.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">robots.txt and sitemap.xml not publicly retrievable.</td>
+            <td class="td-rec">Enable Framer's SEO settings to publish sitemap.xml. Add robots.txt pointing to it. Submit sitemap in Google Search Console.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Title tag is brand-only and leaves keyword real estate on the table.</td>
+            <td class="td-rec">Rewrite to: "Nineteenth Golf Club | 24/7 Golf Simulator Sydney · Silverwater" (under 60 characters).</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Google Business Profile is under-optimised.</td>
+            <td class="td-rec">Claim or verify GBP. Add 15+ photos (bays, Trackman screens, lounge, exterior). Fill all categories, 24/7 hours, products, posts, Q&amp;A. Launch a review-request email flow.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">Only 2-3 indexable pages. No content to rank for long-tail queries.</td>
+            <td class="td-rec">Build a /blog or /journal section targeting: "golf simulator sydney", "indoor golf silverwater", "trackman near me", "after-hours golf practice sydney".</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No BreadcrumbList or FAQPage schema.</td>
+            <td class="td-rec">Add FAQPage schema to /pricing answering the top 6 questions: cost, what's included, cancellation, parking, age, how booking works.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-low">Low</span></td>
+            <td class="td-issue">No H1/H2 keyword discipline. Headings are brand and slogan-led.</td>
+            <td class="td-rec">Keep the creative headline visually, but ensure the DOM H1 contains the category term: "24/7 Golf Simulator in Silverwater, Sydney".</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 06 BOOKING SYSTEM -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Booking system</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-functional">Functional</span>
+      <span class="status-subline">External platform · Significant tracking gaps</span>
+    </div>
+    <ul class="findings-list">
+      <li>Third-party platform: Your Golf Booking (YGB) at yourgolfbooking.com/venues/nineteenth-gc/booking.</li>
+      <li>Every Book Now CTA takes the visitor off nineteenthgc.com and onto YGB, where date, bay, contact details, and payment are all captured.</li>
+      <li>Apple Pay, Google Pay, and card payments appear to be supported, making the payment experience reasonably low-friction.</li>
+      <li>Memberships and bay selection are available as separate YGB URLs, and the promo code field accepts TRIAL25.</li>
+      <li>There's no mechanism in place to pass a confirmed booking event back to nineteenthgc.com for Pixel, GA4, or Ads attribution.</li>
+      <li>The customer journey ends on a third-party domain with no branded thank-you page, which hurts both the brand experience and measurement.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">Bookings complete on an external domain with no event pass-back.</td>
+            <td class="td-rec">Set up the redirect so the YGB confirmation page sends visitors to nineteenthgc.com/thank-you. Fire Pixel Purchase, GA4 purchase, and Google Ads conversion on that page.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">No server-side fallback. Browser pixel will miss a portion of conversions.</td>
+            <td class="td-rec">Add Conversions API via webhook from YGB or a scheduled Zap matching email to event. Use event_id dedup between browser and server.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Pricing is only visible inside the booking flow.</td>
+            <td class="td-rec">Mirror the YGB pricing onto /pricing and the homepage. Remove the need to enter the booking flow just to learn the cost.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">Domain switch weakens trust and branding.</td>
+            <td class="td-rec">Where YGB permits, use a custom domain (book.nineteenthgc.com) so the URL stays on-brand even if hosting is external.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">Guest-checkout behaviour unclear. Possible forced account creation.</td>
+            <td class="td-rec">Confirm guest checkout is enabled in YGB settings. If not, enable or negotiate with YGB.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No visible cancellation, refund, ID, or age policy pre-booking.</td>
+            <td class="td-rec">Add a short "Good to know" block on /pricing covering these points before the user commits.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 CONVERSION JOURNEY -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Conversion journey</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-partial">Functional but fragmented</span>
+      <span class="status-subline">Two hand-off points break tracking</span>
+    </div>
+    <div class="context-grid" style="margin-bottom:20px;">
+      <div class="context-card">
+        <div class="context-card-label">Steps 1-2: Awareness and consideration</div>
+        <p>The hero does its job. "Your game. Your time." with 24/7 positioning and the TRIAL25 offer is a strong opening.</p>
+        <p>Pricing and gallery pages exist, but pricing isn't surfaced on the homepage, and there are no reviews or testimonials anywhere on site.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-card-label">Steps 3-4: Decision and action</div>
+        <p>"Book your bay now" sends the visitor to yourgolfbooking.com. That's where Pixel and GA4 lose them.</p>
+        <p>Bay selection, time, details, and payment all happen on YGB. No data flows back to nineteenthgc.com.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-card-label">Step 5: Post-booking</div>
+        <p>YGB sends a confirmation email. Beyond that, there's nothing. No branded follow-up, no review request, no prompt to book again, no membership nudge.</p>
+      </div>
+      <div class="context-card">
+        <div class="context-card-label">Trust signals on-site</div>
+        <p>Address, phone, map link, and an Instagram embed are all present.</p>
+        <p>What's missing: a star rating or review count, testimonials, team profiles, and any press or partner logos. A Trackman partner badge would be a quick, high-credibility addition.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-critical">Critical</span></td>
+            <td class="td-issue">Cross-domain attribution is broken at two hand-offs.</td>
+            <td class="td-rec">Fix via redirect and /thank-you page (see sections 3 and 6). Until fixed, all paid-media reporting is unreliable.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">No post-booking lifecycle email sequence.</td>
+            <td class="td-rec">Build a 4-email flow: D+1 welcome and pre-session tips, D+3 review request to Google, D+7 "book your next bay", D+14 membership upsell. Use Mailchimp, Klaviyo, or Brevo.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Pricing friction before commitment.</td>
+            <td class="td-rec">Surface pricing on the homepage (addressed in sections 2 and 5).</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No visible social proof on-site.</td>
+            <td class="td-rec">Pull 3-5 Google reviews (JSON-LD and widget) into the homepage above the footer.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No SMS reminder confirmed.</td>
+            <td class="td-rec">Confirm YGB SMS reminders are on. This reduces no-show rate.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-low">Low</span></td>
+            <td class="td-issue">No branded thank-you moment.</td>
+            <td class="td-rec">The thank-you page doubles as an attribution beacon and brand touchpoint. Design it like a mini-reward: next steps, WiFi, parking, what to bring.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 08 FACEBOOK -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2 class="section-title">Facebook page</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-partial">Exists</span>
+      <span class="status-subline">Under-optimised</span>
+    </div>
+    <ul class="findings-list">
+      <li>Page URL: facebook.com/p/Nineteenth-Golf-Club-61581731176137 (ID 61581731176137), linked from the site footer.</li>
+      <li>Follower count, posting cadence, and review rating weren't publicly visible without logging in on the audit date, so we'll pull those figures from inside Business Manager once access is granted.</li>
+      <li>The Meta Business account will need to be set up and linked to the Meta Pixel and Ads account as part of the same setup session.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Posting cadence and content mix unconfirmed. Likely low.</td>
+            <td class="td-rec">Commit to 2-3 posts per week: facility highlights, member spotlights, offers, swing tips. Cross-post Reels from Instagram.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Reviews and CTA button status not verified.</td>
+            <td class="td-rec">Enable Reviews. Set the primary CTA to "Book Now" linking to nineteenthgc.com so visits are attributable.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No Messenger automation.</td>
+            <td class="td-rec">Add a greeting and FAQ auto-reply covering hours, pricing, address, and a Book Now link.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">Page not confirmed linked to the Ads account or Pixel.</td>
+            <td class="td-rec">In Meta Business Suite: link Page, Pixel, Ad Account, Instagram, and billing in a single sitting.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-low">Low</span></td>
+            <td class="td-issue">About and services fields may be incomplete.</td>
+            <td class="td-rec">Fill every field: hours, price range, address, services (bays, memberships, lessons), amenities, parking info.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 09 INSTAGRAM -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2 class="section-title">Instagram page</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="status-row">
+      <span class="status-badge status-active">Active</span>
+      <span class="status-subline">Handle confirmed · Cadence and strategy to verify</span>
+    </div>
+    <ul class="findings-list">
+      <li>The handle is @nineteenth.gc (instagram.com/nineteenth.gc), and a recent Reel is embedded on the homepage, confirming the account is live and posting.</li>
+      <li>The link in bio is confirmed via the external embed, but where it actually points hasn't been verified, so it should be going to /book or the homepage with a UTM parameter attached.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Link in bio destination may not be tracked.</td>
+            <td class="td-rec">Use a single LinkTree or Beacons page with UTM-tagged links to /book, /pricing, and a lead-capture. Or link direct to /book?utm_source=instagram&amp;utm_medium=bio.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-high">High</span></td>
+            <td class="td-issue">Cadence likely below proposal target (3-4 Reels and 3-4 statics per week).</td>
+            <td class="td-rec">Lock in a 7-day content calendar: 2 Reels, 2 statics, 1 carousel, 5 stories. Batch-shoot monthly.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">Hashtag and location tagging not verified.</td>
+            <td class="td-rec">Standard stack: #sydneygolf #indoorgolf #trackman #golfsimulator #silverwater + geo-tag location on every post.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-medium">Medium</span></td>
+            <td class="td-issue">No UGC loop in place.</td>
+            <td class="td-rec">Launch #MyNineteenthGC. Repost member swings. Incentivise with a bay credit draw.</td>
+          </tr>
+          <tr>
+            <td class="td-sev"><span class="sev-pill sev-low">Low</span></td>
+            <td class="td-issue">Highlights on the profile likely not curated.</td>
+            <td class="td-rec">Build covers and 5 evergreen highlights: Tour, Tech, Pricing, Book, Reviews.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 10 ROADMAP -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2 class="section-title">30 / 60 / 90-day roadmap</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="card">
+      <p>The sequencing below is designed so that paid media in Month 2 runs against a clean, measurable funnel. Tracking infrastructure goes in first. Campaigns only go live once attribution is confirmed and working.</p>
+    </div>
+    <div class="roadmap-grid">
+      <div class="roadmap-block">
+        <div class="roadmap-header">
+          <span class="roadmap-title">Days 0-30: Foundation</span>
+          <span class="roadmap-tag">Month 1</span>
+        </div>
+        <div class="roadmap-body">
+          <ul class="roadmap-list">
+            <li>Install GTM. Install GA4 through GTM. Verify core events.</li>
+            <li>Install and verify Meta Pixel site-wide. Add Lead event to Book Now clicks.</li>
+            <li>Build the redirect /thank-you page. Wire Purchase events for Pixel, GA4, and Google Ads.</li>
+            <li>Add LocalBusiness JSON-LD schema. Publish robots.txt and sitemap.xml. Submit to Search Console.</li>
+            <li>Claim and optimise Google Business Profile: photos, hours, products, posts, review flow.</li>
+            <li>Add pricing block and 3-quote testimonial band to the homepage.</li>
+            <li>Rewrite title tag and hero subhead to specify the 30-minute trial.</li>
+            <li>Confirm Business Manager links: Page, Pixel, Ads, Instagram, and billing under one asset group.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="roadmap-block">
+        <div class="roadmap-header">
+          <span class="roadmap-title">Days 31-60: Activate</span>
+          <span class="roadmap-tag">Month 2</span>
+        </div>
+        <div class="roadmap-body">
+          <ul class="roadmap-list">
+            <li>Stand up Meta Conversions API via YGB webhook or Zapier. Dedupe with browser pixel.</li>
+            <li>Launch 3-tier Meta funnel: awareness, consideration, conversion.</li>
+            <li>Launch Google Search campaign on branded and high-intent non-brand keywords.</li>
+            <li>Build and activate post-booking email sequence: D+1, D+3, D+7, D+14.</li>
+            <li>Lock content calendar: IG 2 Reels, 2 statics, 1 carousel, daily stories. FB 2-3 posts per week.</li>
+            <li>Launch review-request flow to existing bookers. Target 25+ Google reviews by Day 60.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="roadmap-block">
+        <div class="roadmap-header">
+          <span class="roadmap-title">Days 61-90: Optimise</span>
+          <span class="roadmap-tag">Month 3</span>
+        </div>
+        <div class="roadmap-body">
+          <ul class="roadmap-list">
+            <li>First CPR, CAC, and ROAS review. Kill bottom-quartile creative. Scale winners.</li>
+            <li>Launch retargeting audiences: all visitors, pricing viewers, Book Now abandoners.</li>
+            <li>Add 4 blog posts targeting long-tail local keywords.</li>
+            <li>Add FAQPage schema to /pricing.</li>
+            <li>Launch #MyNineteenthGC UGC loop and one micro-influencer collaboration.</li>
+            <li>Membership upsell campaign to second-time bookers.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 VERIFICATION CHECKLIST -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2 class="section-title">Verification checklist</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="card">
+      <p>We'll walk through this checklist together once implementation is underway. Every item can be verified directly from a browser or Tag Assistant, and each one gets signed off with screenshot evidence.</p>
+    </div>
+    <div class="checklist-wrap table-wrap">
+      <table>
+        <thead><tr><th>Check</th><th>How to verify it is done</th></tr></thead>
+        <tbody>
+          <tr><td>GA4 installed</td><td class="td-rec">Real-Time report shows your own session.</td></tr>
+          <tr><td>GTM container live</td><td class="td-rec">Tag Assistant shows GTM container firing.</td></tr>
+          <tr><td>Meta Pixel installed</td><td class="td-rec">Meta Pixel Helper shows PageView on every page.</td></tr>
+          <tr><td>Lead event wired</td><td class="td-rec">Clicking Book Now fires a Lead event in Pixel Helper.</td></tr>
+          <tr><td>Thank-you page exists</td><td class="td-rec">Test booking returns to nineteenthgc.com/thank-you.</td></tr>
+          <tr><td>Purchase event fires</td><td class="td-rec">Pixel, GA4, and Ads conversion all visible on the thank-you page.</td></tr>
+          <tr><td>CAPI live</td><td class="td-rec">Meta Events Manager shows both browser and server events, deduped.</td></tr>
+          <tr><td>LocalBusiness schema</td><td class="td-rec">Rich Results test returns a valid LocalBusiness result.</td></tr>
+          <tr><td>Sitemap published</td><td class="td-rec">nineteenthgc.com/sitemap.xml returns 200. Submitted in GSC.</td></tr>
+          <tr><td>robots.txt published</td><td class="td-rec">nineteenthgc.com/robots.txt returns 200 and references sitemap.</td></tr>
+          <tr><td>GBP claimed and complete</td><td class="td-rec">GBP shows 15+ photos, hours, categories, products, and description.</td></tr>
+          <tr><td>UTMs standardised</td><td class="td-rec">All bio, ad, and email links carry consistent source, medium, and campaign values.</td></tr>
+          <tr><td>Business Manager linked</td><td class="td-rec">Page, Pixel, Ads Account, Instagram, and billing all under one BM asset group.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Nineteenth GC &nbsp;·&nbsp; Digital Audit Report &nbsp;·&nbsp; Prepared by Antonio &amp; Sean &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; 14 April 2026</p>
+</footer>
+
+</body>
+</html>
