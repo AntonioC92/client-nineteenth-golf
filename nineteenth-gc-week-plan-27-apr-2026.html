@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nineteenth GC — Week Plan · 27 Apr–3 May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:      #0D1F0F;
+    --primary-mid:  #1A3D1E;
+    --primary-deep: #081408;
+    --accent:       #B89A5A;
+    --accent-light: #D4B87A;
+    --neutral:      #E8E0D0;
+    --charcoal:     #2C2C2C;
+    --muted:        #6b7280;
+    --white:        #ffffff;
+    --bg:           #F2EDE4;
+
+    --sev-crit:  #9b1c1c;
+    --sev-high:  #b45309;
+    --sev-med:   #1F4E79;
+    --sev-low:   #2E7D32;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--charcoal); line-height: 1.65; }
+
+  .site-header { background: var(--primary); position: relative; overflow: hidden; }
+  .site-header::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(184,154,90,0.04) 40px, rgba(184,154,90,0.04) 41px); }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 64px 48px 56px; position: relative; }
+  .brand-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.25em; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .brand-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(184,154,90,0.3); max-width: 200px; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 58px); font-weight: 900; color: var(--white); line-height: 1.05; }
+  .header-title span { color: var(--accent); }
+  .header-sub { font-size: 15px; color: var(--neutral); opacity: 0.82; margin-top: 14px; font-weight: 300; max-width: 760px; }
+  .header-meta { display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; opacity: 0.85; }
+  .meta-value { font-size: 14px; color: var(--white); font-weight: 500; }
+  .gold-bar { height: 3px; background: linear-gradient(90deg, var(--accent), transparent); }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 48px 48px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.15em; min-width: 32px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--primary); letter-spacing: -0.01em; }
+  .section-rule { flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent), rgba(184,154,90,0.1)); }
+
+  .summary-card { background: var(--white); border-radius: 8px; padding: 32px 36px; border: 1px solid rgba(13,31,15,0.08); box-shadow: 0 2px 12px rgba(13,31,15,0.05); }
+  .summary-card p { font-size: 15px; line-height: 1.75; margin-bottom: 12px; }
+  .summary-card p:last-child { margin-bottom: 0; }
+  .summary-card strong { color: var(--primary); }
+
+  .goals { margin-top: 20px; padding: 20px 24px; background: var(--neutral); border-left: 4px solid var(--accent); border-radius: 4px; }
+  .goals-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary-mid); margin-bottom: 10px; }
+  .goals ul { list-style: none; padding: 0; }
+  .goals ul li { font-size: 14px; color: var(--charcoal); padding: 4px 0; padding-left: 22px; position: relative; }
+  .goals ul li::before { content: '●'; color: var(--accent); position: absolute; left: 0; top: 3px; font-size: 10px; }
+
+  .status-legend { display: flex; gap: 10px; margin: 10px 0 0; flex-wrap: wrap; }
+
+  .status { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; font-weight: 500; margin-left: 10px; vertical-align: middle; white-space: nowrap; }
+  .status.done { background: rgba(46,125,50,0.12); color: #2E7D32; border: 1px solid rgba(46,125,50,0.35); }
+  .status.done::before { content: "✓ "; }
+  .status.progress { background: rgba(180,83,9,0.12); color: #b45309; border: 1px solid rgba(180,83,9,0.35); }
+  .status.progress::before { content: "● "; }
+  .status.next { background: rgba(107,114,128,0.08); color: #6b7280; border: 1px solid rgba(107,114,128,0.25); }
+  .status.next::before { content: "→ "; }
+
+  .day-grid { display: flex; flex-direction: column; gap: 16px; }
+  .day-block { background: var(--white); border-radius: 8px; border: 1px solid rgba(13,31,15,0.07); box-shadow: 0 2px 8px rgba(13,31,15,0.04); overflow: hidden; }
+  .day-header { background: var(--primary); padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .day-header .day-label { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--white); }
+  .day-header .day-label span { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 400; color: var(--accent); letter-spacing: 0.15em; margin-right: 14px; }
+  .day-header .day-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(184,154,90,0.25); color: var(--accent-light); padding: 4px 12px; border-radius: 20px; }
+  .day-body { padding: 22px 28px; }
+
+  .task { padding: 14px 0; border-bottom: 1px solid rgba(13,31,15,0.06); display: grid; grid-template-columns: 80px 1fr; gap: 18px; align-items: flex-start; }
+  .task:last-child { border-bottom: none; }
+  .task:first-child { padding-top: 4px; }
+
+  .sev { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; text-align: center; font-weight: 500; white-space: nowrap; }
+  .sev.crit { background: rgba(155,28,28,0.08); color: var(--sev-crit); border: 1px solid rgba(155,28,28,0.2); }
+  .sev.high { background: rgba(180,83,9,0.08);  color: var(--sev-high); border: 1px solid rgba(180,83,9,0.2); }
+  .sev.med  { background: rgba(31,78,121,0.08); color: var(--sev-med);  border: 1px solid rgba(31,78,121,0.2); }
+  .sev.low  { background: rgba(46,125,50,0.08); color: var(--sev-low);  border: 1px solid rgba(46,125,50,0.2); }
+
+  .task-body .task-title { font-weight: 600; color: var(--primary); font-size: 15px; margin-bottom: 4px; }
+  .task-body .task-desc { font-size: 14px; color: var(--charcoal); line-height: 1.6; margin-bottom: 8px; }
+  .task-body .task-evidence { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); background: #fafafa; border-left: 2px solid var(--accent); padding: 6px 10px; border-radius: 2px; letter-spacing: 0.02em; }
+  .task-body .task-evidence b { color: var(--primary-mid); }
+
+  .del-table { background: var(--white); border-radius: 8px; border: 1px solid rgba(13,31,15,0.07); overflow: hidden; box-shadow: 0 2px 8px rgba(13,31,15,0.04); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 14px 18px; text-align: left; font-size: 14px; border-bottom: 1px solid rgba(13,31,15,0.06); vertical-align: top; }
+  th { background: var(--primary); color: var(--white); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fafafa; }
+  td.k { font-weight: 600; color: var(--primary); }
+
+  .handoff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .handoff-grid { grid-template-columns: 1fr; } }
+  .handoff-col { background: var(--white); border-radius: 8px; padding: 24px 28px; border: 1px solid rgba(13,31,15,0.07); box-shadow: 0 2px 8px rgba(13,31,15,0.04); }
+  .handoff-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 2px solid; }
+  .handoff-col.antonio .handoff-head { border-color: #1F4E79; }
+  .handoff-col.sean .handoff-head { border-color: #7B4F00; }
+  .handoff-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; }
+  .handoff-col.antonio .handoff-name { color: #1F4E79; }
+  .handoff-col.sean .handoff-name { color: #7B4F00; }
+  .handoff-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .handoff-col ul { list-style: none; padding: 0; }
+  .handoff-col ul li { font-size: 14px; padding: 7px 0 7px 20px; border-bottom: 1px solid rgba(13,31,15,0.05); position: relative; }
+  .handoff-col ul li:last-child { border-bottom: none; }
+  .handoff-col ul li::before { content: '→'; position: absolute; left: 0; top: 7px; font-size: 12px; }
+  .handoff-col.antonio ul li::before { color: #1F4E79; }
+  .handoff-col.sean ul li::before { color: #7B4F00; }
+
+  .risks { background: var(--white); border-radius: 8px; border: 1px solid rgba(13,31,15,0.07); padding: 24px 28px; box-shadow: 0 2px 8px rgba(13,31,15,0.04); }
+  .risks ul { list-style: none; padding: 0; }
+  .risks li { padding: 10px 0; border-bottom: 1px solid rgba(13,31,15,0.06); font-size: 14px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: flex-start; }
+  .risks li:last-child { border-bottom: none; }
+  .risks li strong { color: var(--primary); }
+
+  .doc-footer { margin-top: 40px; padding: 24px 0; border-top: 1px solid rgba(13,31,15,0.08); text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* ── EDIT BUTTON ── */
+  #edit-toggle {
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    background: var(--primary); color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 10px 20px; border-radius: 100px;
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(13,31,15,0.25);
+    transition: all 0.15s ease;
+  }
+  #edit-toggle:hover { background: var(--primary-mid); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13,31,15,0.3); }
+  body.editing #edit-toggle { background: var(--accent); color: var(--primary); border-color: var(--primary); }
+  body.editing [contenteditable="true"] {
+    outline: 1px dashed rgba(184,154,90,0.45);
+    outline-offset: 3px; border-radius: 3px; cursor: text;
+    transition: outline-color 0.1s ease, background 0.1s ease;
+  }
+  body.editing [contenteditable="true"]:hover { outline-color: rgba(184,154,90,0.85); }
+  body.editing [contenteditable="true"]:focus { outline: 2px solid var(--accent); outline-offset: 3px; background: #fff9e6; }
+  @media print { #edit-toggle { display: none; } }
+</style>
+</head>
+<body>
+
+<button id="edit-toggle" onclick="toggleEdit()" title="Toggle inline edit mode">✏ Edit</button>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-eyebrow">Nineteenth GC · Week Plan</div>
+    <h1 class="header-title">GTM Foundation<br><span>Week of 27 April 2026</span></h1>
+    <p class="header-sub">This is what we're building next week, based on the Digital Audit from 14 April. All of it is foundation work on tracking and measurement: getting GTM, GA4, Pixel, schema and the thank-you page wired up properly. We're not turning on any ads until this is all live and tested.</p>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-label">Window</div><div class="meta-value">Mon 27 Apr → Sun 3 May 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Focus</div><div class="meta-value">Measurement, schema &amp; attribution</div></div>
+      <div class="meta-item"><div class="meta-label">Owners</div><div class="meta-value">Antonio &amp; Sean</div></div>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<main class="main">
+
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Why this week matters</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="summary-card">
+    <p>The audit on 14 April told us something clear and useful: the website itself is in good shape, but almost nothing behind the scenes is being tracked. GA4 isn't running, Google Tag Manager isn't installed, the Meta Pixel isn't verified sitewide, there's no Google Ads conversion tag, and the homepage is missing LocalBusiness schema. On top of that, when someone books through Your Golf Booking the handoff doesn't pass anything back to the main site, so when a booking happens we can't tell where it came from.</p>
+    <p>That makes next week our foundation week. Turning on paid ads right now would mean flying blind, so the job is to get the tracking working before we spend a single pound on traffic. Once the foundation is in, every ad, post and campaign that follows becomes measurable and tunable.</p>
+    <p>By Sunday 3 May we want GA4 running, the Meta Pixel verified, a working thank-you page that fires conversion events when a booking completes, LocalBusiness schema live on the homepage, and a tidy Meta Business Manager with Page, Pixel, Ads account, Instagram and billing all linked in one place.</p>
+
+    <div class="goals">
+      <div class="goals-label">End-of-week success criteria</div>
+      <ul>
+        <li>GA4 Real-Time shows a test session (open the site from a phone and see it register).</li>
+        <li>Meta Pixel Helper shows <code>PageView</code> on every page and fires <code>Lead</code> on every Book-Now click.</li>
+        <li>A test booking on YGB returns the user to <code>nineteenthgc.com/thank-you</code> and fires Pixel <code>Purchase</code>, GA4 <code>purchase</code>, and a Google Ads conversion.</li>
+        <li>Google's Rich Results Test returns a valid <code>LocalBusiness</code> schema from the homepage.</li>
+        <li><code>/sitemap.xml</code> and <code>/robots.txt</code> return 200 and the sitemap is submitted in Search Console.</li>
+      </ul>
+    </div>
+
+    <div class="goals" style="margin-top:14px;">
+      <div class="goals-label">Where we are right now</div>
+      <p style="font-size:14px;color:var(--charcoal);margin:4px 0 10px;">Every task on the day-by-day plan carries a status tag so progress is clear at a glance.</p>
+      <div class="status-legend">
+        <span class="status done">Done</span>
+        <span class="status progress">In progress</span>
+        <span class="status next">Next</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">Day-by-day plan</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="day-grid">
+
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-label"><span>MON · 27 APR</span>Foundations: containers &amp; accounts</div>
+        <div class="day-tag">Build</div>
+      </div>
+      <div class="day-body">
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Create the GTM container and install it in Framer <span class="status next">Next</span></div>
+          <div class="task-desc">Spin up a fresh GTM container for <code>nineteenthgc.com</code>. Paste the head and body snippet into the Framer project via Site Settings, then publish.</div>
+          <div class="task-evidence"><b>Evidence:</b> Tag Assistant shows <code>GTM-XXXXXX</code> firing on every page.</div>
+        </div></div>
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Create GA4 property and route it through GTM <span class="status progress">In progress</span></div>
+          <div class="task-desc">Create a new GA4 property and configure the GA4 Config tag inside GTM rather than hardcoding gtag. That way every tag we add from here on gets managed from one place.</div>
+          <div class="task-evidence"><b>Evidence:</b> GA4 Real-Time report registers a test session from phone and desktop.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Create or link the Google Ads account <span class="status next">Next</span></div>
+          <div class="task-desc">Confirm with the client whether a Google Ads account already exists. If it does, link via Ads Manager access. If not, create one under the business entity and link it to GA4.</div>
+          <div class="task-evidence"><b>Evidence:</b> Ads and GA4 link confirmed under Admin, Product Links.</div>
+        </div></div>
+        <div class="task"><div class="sev med">Medium</div><div class="task-body">
+          <div class="task-title">Verify Google Search Console via GTM <span class="status next">Next</span></div>
+          <div class="task-desc">Use the GTM verification method so we avoid DNS changes. Connect GSC to the GA4 property to get query data flowing.</div>
+          <div class="task-evidence"><b>Evidence:</b> <code>nineteenthgc.com</code> appears verified in the GSC dashboard.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-label"><span>TUE · 28 APR</span>Meta Pixel &amp; Business Manager</div>
+        <div class="day-tag">Build</div>
+      </div>
+      <div class="day-body">
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Create the Meta Pixel in Business Suite <span class="status done">Done</span></div>
+          <div class="task-desc">The Pixel has been created in Meta Events Manager and the base <code>fbq()</code> snippet is firing through GTM on every page.</div>
+          <div class="task-evidence"><b>Evidence:</b> Meta Pixel Helper shows <code>PageView</code> on <code>/</code>, <code>/pricing</code> and <code>/gallery</code>.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Fire a <code>Lead</code> event on every Book-Now click <span class="status progress">In progress</span></div>
+          <div class="task-desc">Add a GTM click trigger matching the outbound YGB URL pattern, and fire <code>fbq('track','Lead')</code> plus a GA4 <code>book_now_click</code> event on the same trigger. This becomes our mid-funnel soft conversion.</div>
+          <div class="task-evidence"><b>Evidence:</b> clicking Book Now logs <code>Lead</code> in Pixel Helper and <code>book_now_click</code> in GA4 DebugView.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Link Page, Pixel, Ads, Instagram and billing in Business Manager <span class="status done">Done</span></div>
+          <div class="task-desc">All five assets are now grouped under a single Meta Business Manager asset group, with Antonio and Sean both on the appropriate roles. This was the single-sitting job that tends to get postponed, and it's handled.</div>
+          <div class="task-evidence"><b>Evidence:</b> Business Manager Overview shows all assets associated and both of us with correct permissions.</div>
+        </div></div>
+        <div class="task"><div class="sev med">Medium</div><div class="task-body">
+          <div class="task-title">Define the UTM taxonomy document <span class="status next">Next</span></div>
+          <div class="task-desc">Lock source, medium, campaign and content conventions in a shared Google Sheet. Every link we publish from here uses this, with no exceptions.</div>
+          <div class="task-evidence"><b>Evidence:</b> UTM sheet shared with Sean and the client, pinned in the project Slack.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-label"><span>WED · 29 APR</span>The cross-domain bridge: /thank-you</div>
+        <div class="day-tag">Critical path</div>
+      </div>
+      <div class="day-body">
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Build <code>nineteenthgc.com/thank-you</code> on Framer <span class="status progress">In progress</span></div>
+          <div class="task-desc">A branded confirmation page with a "You're booked" headline, a next-steps panel (wifi, parking, what to bring), a link to membership, and a CTA to share the Trial25 code with a friend. The page doubles as the attribution beacon for every booking and the brand touch that Your Golf Booking can't deliver on its own domain.</div>
+          <div class="task-evidence"><b>Evidence:</b> page live at <code>/thank-you</code>, mobile responsive, set to <code>noindex</code> so it doesn't rank.</div>
+        </div></div>
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Configure the YGB post-payment redirect to <code>/thank-you?booking=1</code> <span class="status next">Next</span></div>
+          <div class="task-desc">Use YGB's booking-engine settings where possible, or raise a support ticket if the redirect field isn't self-serve. Append <code>?booking_id={value}</code> if YGB exposes a transaction ID so we can deduplicate events later.</div>
+          <div class="task-evidence"><b>Evidence:</b> a £0 test booking (using a 100% promo code) lands on <code>/thank-you?booking=1</code>.</div>
+        </div></div>
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Fire Purchase events on /thank-you for Pixel, GA4 and Google Ads <span class="status next">Next</span></div>
+          <div class="task-desc">Three tags on one trigger (page URL contains <code>/thank-you</code>): <code>fbq('track','Purchase')</code> with an <code>event_id</code>, a GA4 <code>purchase</code> event, and a Google Ads Purchase conversion action. Pass a value if YGB exposes one in a URL parameter.</div>
+          <div class="task-evidence"><b>Evidence:</b> a test booking produces matching entries in Events Manager, GA4 DebugView and Google Ads diagnostics.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Kick off the Conversions API decision (spec only this week) <span class="status next">Next</span></div>
+          <div class="task-desc">iOS and ad-blockers will kill a slice of browser-pixel fires over time, so we need a server-side fallback. This week we just evaluate the options (Stape.io, a Zapier YGB-email-to-CAPI pipe, or a direct webhook) and land on an approach. The build itself comes in Week 2.</div>
+          <div class="task-evidence"><b>Evidence:</b> a short decision doc in the project folder by end of day.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-label"><span>THU · 30 APR</span>Schema, SEO basics and local discoverability</div>
+        <div class="day-tag">Build</div>
+      </div>
+      <div class="day-body">
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Add LocalBusiness / SportsActivityLocation JSON-LD schema <span class="status next">Next</span></div>
+          <div class="task-desc">A JSON-LD block in the Framer head on the homepage covering name, address, geo coordinates, opening hours (24/7), phone, price range, image array, and sameAs links to Instagram and Facebook. This is the biggest single lever we have for showing up in the Google Local Pack and the Knowledge Panel.</div>
+          <div class="task-evidence"><b>Evidence:</b> Google's Rich Results Test returns a valid LocalBusiness result with zero errors.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Publish <code>/robots.txt</code> and <code>/sitemap.xml</code> <span class="status progress">In progress</span></div>
+          <div class="task-desc">Turn on Framer's SEO publishing settings. Add a <code>robots.txt</code> that points to the sitemap. Submit the sitemap in Search Console.</div>
+          <div class="task-evidence"><b>Evidence:</b> both URLs return 200 and the sitemap shows "Success" in GSC.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Rewrite the title tag and hero subhead <span class="status next">Next</span></div>
+          <div class="task-desc">New title: <code>Nineteenth Golf Club | 24/7 Golf Simulator Sydney · Silverwater</code> (under 60 characters). Hero subhead updated to read "Your first 30-minute session free with code Trial25", which removes the duration ambiguity the audit flagged.</div>
+          <div class="task-evidence"><b>Evidence:</b> Framer meta reflects the new title and the homepage hero DOM matches the rewrite.</div>
+        </div></div>
+        <div class="task"><div class="sev med">Medium</div><div class="task-body">
+          <div class="task-title">Ensure the DOM H1 contains the category term <span class="status next">Next</span></div>
+          <div class="task-desc">Keep "Your game. Your time." as the visual headline. Behind it, the underlying H1 should read "24/7 Golf Simulator in Silverwater, Sydney". Visually hidden is fine; ranking matters more than aesthetics here.</div>
+          <div class="task-evidence"><b>Evidence:</b> Inspect Element on the homepage shows the category-term H1.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-label"><span>FRI · 1 MAY</span>Google Business Profile &amp; homepage trust signals</div>
+        <div class="day-tag">Build</div>
+      </div>
+      <div class="day-body">
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Claim and verify the Google Business Profile <span class="status progress">In progress</span></div>
+          <div class="task-desc">Confirm ownership with the client. If the profile isn't claimed yet, begin verification (postcard or video). Fill every field: categories (Golf Instructor, Sports Complex), 24/7 hours, products, price range, description.</div>
+          <div class="task-evidence"><b>Evidence:</b> GBP shows verified and every field is complete.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Upload 15+ GBP photos <span class="status next">Next</span></div>
+          <div class="task-desc">Sean to brief: bays, Trackman screens, lounge, exterior, signage, parking, logo. Mobile-shot is fine if shot well. What matters is volume and recency for the GBP algorithm.</div>
+          <div class="task-evidence"><b>Evidence:</b> GBP photo count is 15 or higher and the last-added date is this week.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Ship the homepage pricing block and testimonial band <span class="status next">Next</span></div>
+          <div class="task-desc">A three-tier pricing summary under the hero (single session, 10-pack, membership) plus a three-quote Google-review band above the footer. Sean handles the band design and Antonio wires it to the fairway-green palette.</div>
+          <div class="task-evidence"><b>Evidence:</b> pricing and testimonial sections visible on the live homepage.</div>
+        </div></div>
+        <div class="task"><div class="sev med">Medium</div><div class="task-body">
+          <div class="task-title">Add a <code>book.nineteenthgc.com</code> custom-domain request to YGB <span class="status next">Next</span></div>
+          <div class="task-desc">Even if it takes a couple of weeks to resolve, file the request now. Keeping the URL on-brand through checkout is a small trust lift and a bigger attribution lift.</div>
+          <div class="task-evidence"><b>Evidence:</b> email or ticket to YGB support, reference saved.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-header">
+        <div class="day-label"><span>SAT–SUN · 2–3 MAY</span>End-to-end verification</div>
+        <div class="day-tag">Prove</div>
+      </div>
+      <div class="day-body">
+        <div class="task"><div class="sev crit">Critical</div><div class="task-body">
+          <div class="task-title">Walk the whole Appendix-11 checklist and tick it off <span class="status next">Next</span></div>
+          <div class="task-desc">Every row in the audit's verification checklist (GA4, GTM, Pixel, Lead event, thank-you page, Purchase event, LocalBusiness schema, sitemap, robots.txt, GBP, UTMs, Business Manager link) gets a screenshot pinned into a shared evidence doc.</div>
+          <div class="task-evidence"><b>Evidence:</b> <code>gtm-verification-w1.pdf</code> saved to the project folder.</div>
+        </div></div>
+        <div class="task"><div class="sev high">High</div><div class="task-body">
+          <div class="task-title">Run three real test bookings across devices and browsers <span class="status next">Next</span></div>
+          <div class="task-desc">iPhone Safari, Android Chrome, desktop Firefox. Use a 100% promo code so it costs nothing. Prove each Purchase event deduplicates cleanly in Events Manager and shows up in GA4 and Google Ads diagnostics.</div>
+          <div class="task-evidence"><b>Evidence:</b> three Purchase rows in Events Manager, matched in GA4 and Google Ads.</div>
+        </div></div>
+        <div class="task"><div class="sev med">Medium</div><div class="task-body">
+          <div class="task-title">Publish the Week-1 status note to the client <span class="status next">Next</span></div>
+          <div class="task-desc">A short, ticked-off summary (not prose): what's live, what's pending, what's needed from their side. Same template we'll reuse weekly.</div>
+          <div class="task-evidence"><b>Evidence:</b> email sent Sunday evening, Sean on CC.</div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2 class="section-title">What gets delivered by Sunday 3 May</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="del-table">
+    <table>
+      <thead>
+        <tr><th style="width:28%">Deliverable</th><th>Form</th><th style="width:18%">State</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="k">GTM container</td><td>Published on <code>nineteenthgc.com</code>, firing on all pages</td><td>Live</td></tr>
+        <tr><td class="k">GA4 property</td><td>Routed via GTM, Real-Time verified, Search Console linked</td><td>Live</td></tr>
+        <tr><td class="k">Meta Pixel</td><td>Base code sitewide, Lead event on Book-Now, Purchase event on /thank-you</td><td>Live and verified in Pixel Helper</td></tr>
+        <tr><td class="k">Google Ads conversion</td><td>Purchase conversion action firing from /thank-you</td><td>Live</td></tr>
+        <tr><td class="k">/thank-you page</td><td>Branded confirmation page with YGB redirect wired in</td><td>Live</td></tr>
+        <tr><td class="k">LocalBusiness schema</td><td>JSON-LD block in homepage head, passing the Rich Results test</td><td>Live</td></tr>
+        <tr><td class="k">robots.txt and sitemap.xml</td><td>Published and submitted to Google Search Console</td><td>Live</td></tr>
+        <tr><td class="k">Google Business Profile</td><td>Claimed, fully populated, 15+ photos uploaded</td><td>Live or pending verification</td></tr>
+        <tr><td class="k">Homepage pricing and testimonials</td><td>Three-tier pricing block and three-quote review band deployed</td><td>Live</td></tr>
+        <tr><td class="k">Rewritten title tag and hero subhead</td><td>Keyword-weighted title, 30-minute trial specified in hero</td><td>Live</td></tr>
+        <tr><td class="k">Business Manager asset group</td><td>Page, Pixel, Ads, Instagram and billing linked with Antonio and Sean access</td><td>Configured</td></tr>
+        <tr><td class="k">UTM taxonomy doc</td><td>Shared Google Sheet pinned in Slack</td><td>Published</td></tr>
+        <tr><td class="k">CAPI approach decision</td><td>Short doc in the project folder, build scheduled for Week 2</td><td>Decided</td></tr>
+        <tr><td class="k">Week-1 verification pack</td><td>PDF of screenshots, one per audit checklist row</td><td>Sent Sunday evening</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Who's doing what</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="handoff-grid">
+    <div class="handoff-col antonio">
+      <div class="handoff-head"><div>
+        <div class="handoff-name">Antonio</div>
+        <div class="handoff-role">Strategy · Tracking · SEO · Conversion journey</div>
+      </div></div>
+      <ul>
+        <li>Owns GTM, GA4, Ads tag, Pixel and Search Console setup</li>
+        <li>Builds the /thank-you page on Framer and wires the Purchase events</li>
+        <li>Configures the YGB post-payment redirect</li>
+        <li>Writes the LocalBusiness JSON-LD block</li>
+        <li>Rewrites the title tag and hero subhead on Framer</li>
+        <li>Submits the sitemap and robots.txt to GSC</li>
+        <li>Produces the CAPI approach decision doc</li>
+        <li>Assembles the verification evidence pack and the Week-1 update email</li>
+      </ul>
+    </div>
+    <div class="handoff-col sean">
+      <div class="handoff-head"><div>
+        <div class="handoff-name">Sean</div>
+        <div class="handoff-role">Meta Ads · Content · UGC · Editing</div>
+      </div></div>
+      <ul>
+        <li>Joined the Business Manager linking call and has edit access ready for when ads start</li>
+        <li>Briefs and captures 15+ GBP-ready photos of bays, Trackman, lounge and exterior</li>
+        <li>Writes the three homepage testimonial quotes, pulled from Google reviews or member DMs</li>
+        <li>Owns the design of the homepage testimonial band; Antonio wires it to the brand palette</li>
+        <li>Confirms with the client on Google Ads account status, GBP verification status and YGB admin access</li>
+        <li>Holds all Meta creative until Week 2. No ads go live until the Pixel and Purchase event are verified.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2 class="section-title">Risks and mitigations</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="risks">
+    <ul>
+      <li><div class="sev high">High</div><div><strong>YGB's redirect field might not be self-serve.</strong> If the booking platform doesn't expose a post-payment redirect, the whole /thank-you strategy stalls. Mitigation: raise a YGB support ticket on Monday rather than Wednesday, so we have two full working days of lead time before the cross-domain task becomes critical.</div></li>
+      <li><div class="sev high">High</div><div><strong>Google Business Profile verification takes time.</strong> Postcard verification can take 10 to 14 days, and video verification is faster but not guaranteed. Mitigation: Sean confirms with the client on Monday whether the profile is already claimed. That alone could save a week.</div></li>
+      <li><div class="sev med">Medium</div><div><strong>Framer may not expose a clean robots.txt override.</strong> If it doesn't, the fallback is a Framer Pro SEO setting, or a Cloudflare Worker rewrite in the worst case. Mitigation: check the Framer docs during Monday's setup so it doesn't become a Thursday blocker.</div></li>
+      <li><div class="sev med">Medium</div><div><strong>The client may be hard to reach for admin access.</strong> Google Ads account access and GBP ownership both need client input. Mitigation: Sean flags every required admin ask in the Monday catch-up rather than spreading them across the week.</div></li>
+      <li><div class="sev low">Low</div><div><strong>The CAPI vendor decision might slip.</strong> This is a Week-2 build, so a Friday decision is fine. Mitigation: none needed unless the decision slides past the following Monday.</div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <h2 class="section-title">What Week 2 unlocks</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="summary-card">
+    <p>If this week goes to plan, Week 2 (4 to 10 May) moves into server-side tracking and Google Search. We stand up the Conversions API so we don't lose conversions to ad-blockers, then launch a small Google Search campaign on brand terms and a few high-intent non-brand ones like "golf simulator sydney" and "trackman near me". Sean kicks off the Meta funnel against the now-live Pixel, starting with awareness only while we watch the Purchase event for a few days.</p>
+    <p>Week 3 (11 to 17 May) is when we start building the post-booking email sequence (day 1, day 3, day 7, day 14) and the review-request flow. Every real booking in May then turns into a future Google review and a second visit. That's the point we stop talking about tracking setup and start talking about actual results.</p>
+  </div>
+</section>
+
+<div class="doc-footer">
+  Nineteenth GC · Week Plan · 27 Apr–3 May 2026 · Prepared by Antonio &amp; Sean
+</div>
+
+</main>
+
+<script>
+  function toggleEdit() {
+    const editing = document.body.classList.toggle('editing');
+    const selectors = [
+      'p', 'h1', 'h2', 'h3',
+      '.task-title', '.task-desc', '.task-evidence',
+      '.handoff-col ul li', '.risks li div:last-child',
+      '.goals ul li',
+      '.meta-value', '.meta-label',
+      '.header-sub', '.header-title',
+      '.section-title',
+      '.day-header .day-label',
+      '.day-header .day-tag',
+      '.goals-label',
+      'td', 'th',
+      '.doc-footer'
+    ].join(', ');
+    document.querySelectorAll(selectors).forEach(el => {
+      el.contentEditable = editing;
+      if (editing) el.spellcheck = true;
+    });
+    const btn = document.getElementById('edit-toggle');
+    btn.textContent = editing ? '✓ Done' : '✏ Edit';
+  }
+</script>
+
+</body>
+</html>
