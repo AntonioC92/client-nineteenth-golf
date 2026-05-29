@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 2 · 30-Day Plan — Nineteenth Golf Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: #1a1a1a;
+      background: #ffffff;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header {
+      background: #164c3e;
+      color: #ffffff;
+      padding: 56px 32px 0;
+    }
+
+    .header-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 14px;
+    }
+
+    .header-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .header-subtitle {
+      font-size: 15px;
+      font-weight: 400;
+      opacity: 0.75;
+      margin-bottom: 48px;
+    }
+
+    .stat-strip {
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding: 28px 0 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding-right: 24px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    .stat-strip-note {
+      grid-column: 1 / -1;
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.5;
+      margin-top: 16px;
+      letter-spacing: 0.03em;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .intro {
+      padding: 44px 0 8px;
+    }
+
+    .intro p {
+      font-size: 15.5px;
+      font-weight: 400;
+      color: #3a4a42;
+      line-height: 1.75;
+      border-left: 3px solid #e8f0ed;
+      padding-left: 20px;
+    }
+
+    .section-heading {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #164c3e;
+      margin-top: 52px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8f0ed;
+    }
+
+    .week-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 4px;
+    }
+
+    .week-card {
+      background: #f7f9f8;
+      border-left: 4px solid #164c3e;
+      border-radius: 0 8px 8px 0;
+      padding: 24px 28px 26px;
+    }
+
+    .week-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .week-badge {
+      background: #164c3e;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .week-dates {
+      font-size: 12px;
+      font-weight: 500;
+      color: #5a6672;
+      letter-spacing: 0.02em;
+    }
+
+    .week-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .week-framing {
+      font-size: 13.5px;
+      color: #5a6672;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .week-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .week-card ul li {
+      font-size: 14px;
+      color: #2a3830;
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .week-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      background: #164c3e;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    .ongoing-block {
+      background: #e8f0ed;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-top: 4px;
+    }
+
+    .ongoing-block h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #164c3e;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .ongoing-block ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .ongoing-block ul li {
+      font-size: 14px;
+      color: #2a3830;
+      line-height: 1.55;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .ongoing-block ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      background: #164c3e;
+      border-radius: 50%;
+    }
+
+    .table-wrap {
+      margin-top: 4px;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid #dce8e3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead tr {
+      background: #164c3e;
+      color: #ffffff;
+    }
+
+    thead th {
+      padding: 13px 18px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #ffffff;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f7f9f8;
+    }
+
+    tbody td {
+      padding: 12px 18px;
+      color: #1a1a1a;
+      border-top: 1px solid #e8f0ed;
+      vertical-align: middle;
+    }
+
+    tbody td:first-child {
+      font-weight: 500;
+      color: #2a3830;
+    }
+
+    .footer {
+      background: #164c3e;
+      color: #ffffff;
+      margin-top: 64px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .footer p {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+
+    .footer p + p {
+      margin-top: 4px;
+      opacity: 0.55;
+      font-size: 11px;
+    }
+
+    /* ── Action bar ── */
+    .action-bar {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+      z-index: 1000;
+    }
+
+    .action-bar button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+    }
+
+    .action-bar button:active {
+      transform: scale(0.97);
+    }
+
+    #btn-edit {
+      background: #ffffff;
+      color: #164c3e;
+    }
+
+    #btn-edit:hover {
+      background: #f0f7f4;
+    }
+
+    #btn-edit.editing {
+      background: #164c3e;
+      color: #ffffff;
+    }
+
+    #btn-edit.editing:hover {
+      background: #1e6652;
+    }
+
+    #btn-download {
+      background: #164c3e;
+      color: #ffffff;
+    }
+
+    #btn-download:hover {
+      background: #1e6652;
+    }
+
+    .edit-active [contenteditable="true"] {
+      outline: 1.5px dashed rgba(22,76,62,0.35);
+      border-radius: 3px;
+      min-height: 1em;
+    }
+
+    @media (max-width: 600px) {
+      .action-bar {
+        top: auto;
+        bottom: 16px;
+        right: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .stat-strip {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .header-title {
+        font-size: 28px;
+      }
+      .content {
+        padding: 0 20px;
+      }
+      .header {
+        padding: 40px 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Action bar -->
+  <div class="action-bar">
+    <button id="btn-edit">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.5 2.5L13.5 4.5L5 13H3V11L11.5 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span id="btn-edit-label">Edit</span>
+    </button>
+    <button id="btn-download">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 13H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Download
+    </button>
+  </div>
+
+  <div class="header">
+    <div class="header-inner">
+      <p class="header-label">Nineteenth Golf Club</p>
+      <h1 class="header-title">Phase 2 &middot; 30-Day Plan</h1>
+      <p class="header-subtitle">June 2026 &middot; Streetwise Consultancy</p>
+
+      <div class="stat-strip">
+        <div class="stat-item">
+          <div class="stat-value">$563</div>
+          <div class="stat-label">Spend</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">121</div>
+          <div class="stat-label">Bookings</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">$4.65</div>
+          <div class="stat-label">Per Booking</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">17.7&times;</div>
+          <div class="stat-label">ROAS</div>
+        </div>
+        <div class="stat-strip-note">Phase 1 baseline &mdash; 28 days</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="intro">
+      <p>Phase 1 built the tracking foundation and proved the funnel works. This plan covers the first 30 days of Phase 2: closing out the remaining data layer, launching new campaigns, and scaling budget as creative refreshes. Direction C (Google Search and email flow) begins in Month 2 once this foundation is set.</p>
+    </div>
+
+    <div class="section-heading">Four-Week Delivery Plan</div>
+
+    <div class="week-cards">
+
+      <div class="week-card">
+        <div class="week-card-meta">
+          <span class="week-badge">Week 1</span>
+          <span class="week-dates">Days 1 to 7</span>
+        </div>
+        <h3>Close out the tracking layer</h3>
+        <p class="week-framing">Before scaling spend, we need the data layer complete so every conversion has a second source of truth.</p>
+        <ul>
+          <li>Build the on-brand /thank-you confirmation page on Framer, with the Christina Kang free swing assessment as a post-booking nudge</li>
+          <li>Verify GA4 end-to-end through Google Tag Manager</li>
+          <li>Tidy the auto-events feed and standardise the conversion event flow</li>
+          <li>Ship the Meta attributed customers explainer document</li>
+          <li>Daily campaign management and monitoring</li>
+        </ul>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-meta">
+          <span class="week-badge">Week 2</span>
+          <span class="week-dates">Days 8 to 14</span>
+        </div>
+        <h3>New campaigns live</h3>
+        <p class="week-framing">Trial25 keeps running. Week 2 launches two new ad sets alongside it.</p>
+        <ul>
+          <li>Build and launch the memberships and bundles campaign in Meta Ads Manager</li>
+          <li>Stand up three retargeting audiences: ad engagers who did not visit, visitors who did not click Book Now, and clickers who did not book</li>
+          <li>Use foundation memberships and the Christina Kang free swing assessment as the primary offer hooks</li>
+          <li>Weekly report</li>
+        </ul>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-meta">
+          <span class="week-badge">Week 3</span>
+          <span class="week-dates">Days 15 to 21</span>
+        </div>
+        <h3>Scale budget and refresh creative</h3>
+        <p class="week-framing">Frequency is at 3.26. New creative comes before the budget lift.</p>
+        <ul>
+          <li>Refresh the creative pool with new video variants built for mobile (98% of conversions come through the Facebook and Instagram apps)</li>
+          <li>Increase total monthly budget to AUD $1,200 to $1,500 as creative goes live</li>
+          <li>Build a Lookalike Audience from the 121 confirmed purchasers in the Meta Pixel</li>
+          <li>Weekly report</li>
+        </ul>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-meta">
+          <span class="week-badge">Week 4</span>
+          <span class="week-dates">Days 22 to 30</span>
+        </div>
+        <h3>Consolidate and prepare Month 2</h3>
+        <p class="week-framing">Review what the data is saying and lay the groundwork for Google Search.</p>
+        <ul>
+          <li>Publish the first monthly local SEO content piece</li>
+          <li>Provide Google Reviews copy support (NGC leads in-person, email and SMS rollout)</li>
+          <li>Begin Google Search keyword research and budget scoping for Direction C</li>
+          <li>Set up the monthly scorecard: members, booked hours, ad spend, cost per booking</li>
+          <li>Month 2 kickoff plan</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="section-heading">Ongoing throughout</div>
+    <div class="ongoing-block">
+      <ul>
+        <li>Daily campaign monitoring and optimisation</li>
+        <li>Weekly performance report every Friday: spend, reach, cost per booking, key observations</li>
+      </ul>
+    </div>
+
+    <div class="section-heading">Targets at Day 30</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Now</th>
+            <th>Target at Day 30</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monthly spend</td>
+            <td>AUD $563</td>
+            <td>AUD $1,200 to $1,500</td>
+          </tr>
+          <tr>
+            <td>Cost per booking</td>
+            <td>AUD $4.65</td>
+            <td>AUD $5 to $8</td>
+          </tr>
+          <tr>
+            <td>Monthly bookings</td>
+            <td>121</td>
+            <td>200 to 280</td>
+          </tr>
+          <tr>
+            <td>Active campaigns</td>
+            <td>1 (Trial25)</td>
+            <td>3 (Trial25, Memberships, Retargeting)</td>
+          </tr>
+          <tr>
+            <td>GA4 operational</td>
+            <td>No</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>/thank-you page live</td>
+            <td>No</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-inner">
+      <p>Prepared by Antonio Caruso and Sean O'Brien &middot; Streetwise Consultancy &middot; June 2026</p>
+      <p>Ad spend is separate from the retainer and paid directly through your Meta Ads account.</p>
+    </div>
+  </div>
+
+  <script>
+    const btnEdit = document.getElementById('btn-edit');
+    const btnEditLabel = document.getElementById('btn-edit-label');
+    const btnDownload = document.getElementById('btn-download');
+
+    // Editable regions — everything visible except the action bar itself
+    const editableSelectors = [
+      '.header-label', '.header-title', '.header-subtitle',
+      '.stat-value', '.stat-label', '.stat-strip-note',
+      '.intro p',
+      '.section-heading',
+      '.week-card h3', '.week-framing', '.week-card ul li',
+      '.ongoing-block h3', '.ongoing-block ul li',
+      'tbody td',
+      '.footer p'
+    ];
+
+    let editing = false;
+
+    btnEdit.addEventListener('click', function () {
+      editing = !editing;
+      document.body.classList.toggle('edit-active', editing);
+      btnEdit.classList.toggle('editing', editing);
+      btnEditLabel.textContent = editing ? 'Done' : 'Edit';
+
+      editableSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+          if (editing) {
+            el.setAttribute('contenteditable', 'true');
+            el.setAttribute('spellcheck', 'false');
+          } else {
+            el.removeAttribute('contenteditable');
+            el.removeAttribute('spellcheck');
+          }
+        });
+      });
+    });
+
+    btnDownload.addEventListener('click', function () {
+      // Capture current HTML (including any edits), strip contenteditable attrs
+      const clone = document.documentElement.cloneNode(true);
+      clone.querySelectorAll('[contenteditable]').forEach(el => {
+        el.removeAttribute('contenteditable');
+        el.removeAttribute('spellcheck');
+      });
+      // Remove the action bar from the download
+      const bar = clone.querySelector('.action-bar');
+      if (bar) bar.remove();
+
+      const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Phase 2 - 30-Day Plan.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
