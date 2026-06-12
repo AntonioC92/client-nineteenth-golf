@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nineteenth Golf Club · Digital Setup Report · 12 June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:      #164c3e;
+    --primary-mid:  #1f6951;
+    --primary-deep: #0c2d24;
+    --accent:       #ffffff;
+    --accent-light: #DDDDDD;
+    --neutral:      #f1f1f1;
+    --charcoal:     #2B2B2B;
+    --muted:        #a1a1a1;
+    --white:        #ffffff;
+    --bg:           #f1f1f1;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--charcoal);
+    line-height: 1.65;
+  }
+
+  .site-header {
+    background: var(--primary);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 40px,
+      rgba(22,76,62,0.04) 40px, rgba(22,76,62,0.04) 41px);
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 64px 48px 56px;
+    position: relative;
+  }
+  .brand-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+    max-width: 200px;
+  }
+  .header-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+  }
+  .header-title span { color: var(--accent-light); font-style: italic; font-weight: 400; }
+  .header-sub {
+    font-size: 15px;
+    color: var(--neutral);
+    opacity: 0.82;
+    margin-top: 16px;
+    font-weight: 300;
+    max-width: 760px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 34px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .meta-value { font-size: 14px; color: var(--white); font-weight: 500; }
+  .gold-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  .section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--primary);
+    letter-spacing: 0.15em;
+    min-width: 32px;
+    font-weight: 600;
+  }
+  .section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.01em;
+  }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(22,76,62,0.4), rgba(22,76,62,0.05));
+  }
+
+  .intro-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 30px 34px;
+    border: 1px solid rgba(22,76,62,0.08);
+    box-shadow: 0 2px 12px rgba(22,76,62,0.05);
+  }
+  .intro-card p {
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .intro-card strong { color: var(--primary); }
+
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 22px;
+  }
+  @media (max-width: 900px) { .at-a-glance { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .at-a-glance { grid-template-columns: 1fr; } }
+  .glance-cell {
+    background: var(--white);
+    border: 1px solid rgba(22,76,62,0.12);
+    border-radius: 8px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--primary);
+  }
+  .glance-cell.amber { border-left-color: #d4830a; }
+  .glance-cell.red { border-left-color: #c0392b; }
+  .glance-day {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--primary-mid);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .glance-cell.amber .glance-day { color: #d4830a; }
+  .glance-cell.red .glance-day { color: #c0392b; }
+  .glance-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .glance-cell.amber .glance-title { color: #8a5200; }
+  .glance-cell.red .glance-title { color: #c0392b; }
+  .glance-title em { font-style: italic; color: var(--primary-mid); font-weight: 400; }
+  .glance-format {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── POST BLOCK ── */
+  .post-block {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid rgba(22,76,62,0.08);
+    box-shadow: 0 4px 20px rgba(22,76,62,0.07);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .post-block-head {
+    background: var(--primary);
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: var(--white);
+  }
+  .post-block-head.amber-head { background: #8a5200; }
+  .post-block-head .pbh-left { display: flex; flex-direction: column; gap: 4px; }
+  .post-block-head .pbh-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+  }
+  .post-block-head .pbh-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .post-block-head .pbh-title em { font-style: italic; color: var(--accent-light); font-weight: 400; }
+  .pbh-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pbh-chip {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    text-transform: uppercase;
+  }
+  .pbh-chip.pending { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); }
+  .pbh-chip.blocked { background: rgba(192,57,43,0.25); border-color: rgba(192,57,43,0.6); }
+
+  .post-block-body { padding: 26px 32px; }
+  .post-block-body > p.lede {
+    font-size: 14.5px;
+    color: var(--charcoal);
+    margin-bottom: 18px;
+    line-height: 1.7;
+  }
+  .post-block-body > p.lede strong { color: var(--primary); }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 16px;
+  }
+  @media (max-width: 800px) { .field-grid { grid-template-columns: 1fr; } }
+  .field {
+    padding: 12px 0;
+    border-top: 1px solid rgba(22,76,62,0.06);
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 14px;
+    font-size: 13.5px;
+  }
+  .field:first-child { border-top: none; padding-top: 4px; }
+  .field .k {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 3px;
+  }
+  .field .v { color: var(--charcoal); line-height: 1.65; }
+  .field .v code {
+    background: #fafafa;
+    border: 1px solid rgba(22,76,62,0.08);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    word-break: break-all;
+  }
+  .field .v strong { color: var(--primary); }
+
+  /* ── STATUS PILLS ── */
+  .pill {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+  }
+  .pill.live { background: #e8f5e9; color: #164c3e; border: 1px solid rgba(22,76,62,0.3); }
+  .pill.average { background: #e8f5e9; color: #164c3e; border: 1px solid rgba(22,76,62,0.3); }
+  .pill.pending { background: #fff8e1; color: #8a5200; border: 1px solid rgba(212,131,10,0.35); }
+  .pill.blocked { background: #fdecea; color: #c0392b; border: 1px solid rgba(192,57,43,0.3); }
+  .pill.paused  { background: #f5f5f5; color: #777; border: 1px solid #ddd; }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: #fafafa;
+    border: 1px solid rgba(22,76,62,0.1);
+    border-left: 3px solid var(--primary);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-top: 14px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--charcoal);
+  }
+  .callout.amber-call { border-left-color: #d4830a; }
+  .callout.red-call { border-left-color: #c0392b; }
+  .callout strong { color: var(--primary); }
+  .callout.amber-call strong { color: #7a4800; }
+  .callout .callout-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary-mid);
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .callout.amber-call .callout-label { color: #d4830a; }
+  .callout.red-call .callout-label { color: #c0392b; }
+
+  /* ── ACTION CARD ── */
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 800px) { .action-grid { grid-template-columns: 1fr; } }
+  .action-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 22px 24px;
+    border: 1px solid rgba(22,76,62,0.08);
+    box-shadow: 0 2px 8px rgba(22,76,62,0.04);
+  }
+  .action-owner {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .ao-client { background: #fff8e1; color: #7a4800; border: 1px solid rgba(212,131,10,0.35); }
+  .ao-sean   { background: #e3f2fd; color: #0d47a1; border: 1px solid rgba(13,71,161,0.25); }
+  .ao-sw     { background: #e8f5e9; color: #164c3e; border: 1px solid rgba(22,76,62,0.3); }
+  .action-card h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .action-card p {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.65;
+  }
+  .action-card p strong { color: var(--primary); }
+
+  /* ── TRACKING TABLE ── */
+  .track-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .track-table thead tr { border-bottom: 2px solid rgba(22,76,62,0.12); }
+  .track-table th {
+    text-align: left;
+    padding: 8px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .track-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(22,76,62,0.06);
+    color: var(--charcoal);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .track-table tr:last-child td { border-bottom: none; }
+  .track-table td:first-child { font-weight: 600; color: var(--primary); }
+  .track-table td code {
+    font-size: 12px;
+    background: #f4f4f4;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ── LAUNCH STEPS ── */
+  .notes-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 26px 30px;
+    border: 1px solid rgba(22,76,62,0.08);
+    box-shadow: 0 2px 12px rgba(22,76,62,0.05);
+  }
+  .notes-card p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .notes-card p:last-child { margin-bottom: 0; }
+  .notes-card strong { color: var(--primary); }
+
+  .launch-steps { list-style: none; margin-top: 6px; }
+  .launch-steps li {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(22,76,62,0.06);
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .launch-steps li:last-child { border-bottom: none; }
+  .step-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-num.done { background: var(--primary-mid); }
+  .step-num.amber { background: #d4830a; }
+  .step-num.grey { background: #aaa; }
+  .step-body strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 2px;
+  }
+  .step-body p { font-size: 13px; color: #666; margin: 0; }
+
+  /* IDs strip */
+  .ids-strip {
+    background: var(--white);
+    border: 1px solid rgba(22,76,62,0.08);
+    border-radius: 8px;
+    padding: 16px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  .id-item .id-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .id-item .id-val {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+  }
+
+  .doc-footer {
+    margin-top: 44px;
+    padding: 26px 0;
+    border-top: 1px solid rgba(22,76,62,0.08);
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+
+  @media (max-width: 700px) {
+    .header-inner { padding: 40px 24px 36px; }
+    .main { padding: 32px 20px 60px; }
+    .post-block-body { padding: 20px; }
+    .post-block-head { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-eyebrow">Digital Setup Report</div>
+    <h1 class="header-title">Campaign built. <span>Awaiting launch.</span></h1>
+    <p class="header-sub">Google Ads, GA4, and Google Tag Manager are set up. Four items need to be resolved before the campaign goes live. This document covers every element, what's pending, and why.</p>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-label">Date</div><div class="meta-value">12 June 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Google Ads Account</div><div class="meta-value">638-932-0476</div></div>
+      <div class="meta-item"><div class="meta-label">Campaign</div><div class="meta-value">nineteenthgc | Search | Phase 2 | Jun 2026</div></div>
+      <div class="meta-item"><div class="meta-label">Prepared by</div><div class="meta-value">Streetwise Consultancy</div></div>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<main class="main">
+
+<!-- ── SECTION 01: AT A GLANCE ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Today at a glance</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="intro-card">
+    <p>This document covers the full Google Ads campaign build and conversion tracking stack. Three responsive search ads are live across three ad groups. Google Tag Manager and GA4 are published and collecting data. A GA4 to Google Ads link request has been sent, pending admin approval (explained below).</p>
+    <p>The campaign is <strong>paused by design</strong> and will go live once conversion tracking is fully verified. No spend has occurred.</p>
+
+    <div class="at-a-glance">
+      <div class="glance-cell">
+        <div class="glance-day">Google Ads</div>
+        <div class="glance-title">Campaign Built</div>
+        <div class="glance-format">3 ad groups · all ads enabled · campaign paused</div>
+      </div>
+      <div class="glance-cell">
+        <div class="glance-day">GTM</div>
+        <div class="glance-title">Version 3 Live</div>
+        <div class="glance-format">GTM-WND2LDFZ · 2 tags published · active on site</div>
+      </div>
+      <div class="glance-cell amber">
+        <div class="glance-day">GA4 → Ads Link</div>
+        <div class="glance-title">Pending Approval</div>
+        <div class="glance-format">Request sent 12 Jun · client must approve in Google Ads</div>
+      </div>
+      <div class="glance-cell amber">
+        <div class="glance-day">Campaign Status</div>
+        <div class="glance-title">Intentionally Paused</div>
+        <div class="glance-format">Will go live once all 4 blockers are resolved</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ids-strip" style="margin-top:16px;">
+    <div class="id-item">
+      <span class="id-label">Google Ads Account</span>
+      <span class="id-val">638-932-0476</span>
+    </div>
+    <div class="id-item">
+      <span class="id-label">Campaign ID</span>
+      <span class="id-val">23929932123</span>
+    </div>
+    <div class="id-item">
+      <span class="id-label">GA4 Property</span>
+      <span class="id-val">G-04KNNZJ27H</span>
+    </div>
+    <div class="id-item">
+      <span class="id-label">GTM Container</span>
+      <span class="id-val">GTM-WND2LDFZ</span>
+    </div>
+    <div class="id-item">
+      <span class="id-label">Daily Budget</span>
+      <span class="id-val">A$10.00</span>
+    </div>
+    <div class="id-item">
+      <span class="id-label">Bid Strategy</span>
+      <span class="id-val">Maximise Clicks · A$2.50 cap</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 02: GOOGLE ADS ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">Google Ads campaign</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <!-- AG1 -->
+  <div class="post-block">
+    <div class="post-block-head">
+      <div class="pbh-left">
+        <span class="pbh-label">Ad Group 1</span>
+        <span class="pbh-title">Brand <em>· Nineteenth Golf Club</em></span>
+      </div>
+      <div class="pbh-chips">
+        <span class="pbh-chip">Ad Strength: Average</span>
+        <span class="pbh-chip">15 Headlines · 4 Descriptions</span>
+        <span class="pbh-chip">Phrase + Exact Match</span>
+      </div>
+    </div>
+    <div class="post-block-body">
+      <p class="lede">Brand keyword ad group for direct searches for Nineteenth Golf Club. The pinned first headline ensures the brand name leads every impression. H4 updated to remove a repetition issue with the pinned headline. All four descriptions rewritten for natural, conversational copy.</p>
+      <div class="field-grid">
+        <div>
+          <div class="field"><div class="k">Ad Strength</div><div class="v"><span class="pill average">Average</span></div></div>
+          <div class="field"><div class="k">Pinned H1</div><div class="v"><strong>Nineteenth Golf Club Sydney</strong> - always shows first</div></div>
+          <div class="field"><div class="k">Keywords</div><div class="v">nineteenth golf club · nineteenth gc · nineteenth golf silverwater</div></div>
+          <div class="field"><div class="k">Final URL</div><div class="v">nineteenthgc.com/</div></div>
+        </div>
+        <div>
+          <div class="field"><div class="k">Shared assets</div><div class="v">4 sitelinks · 6 callouts · call asset (02 7245 3898), all attached at campaign level</div></div>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="callout-label">Why "Average" for a Brand ad group</span>
+        Brand campaigns carry multiple headlines with the brand name prefix. This is structural and unavoidable. Average is the realistic ceiling for brand ad groups across all advertisers and does not affect quality score or performance.
+      </div>
+    </div>
+  </div>
+
+  <!-- AG2 -->
+  <div class="post-block">
+    <div class="post-block-head">
+      <div class="pbh-left">
+        <span class="pbh-label">Ad Group 2</span>
+        <span class="pbh-title">Golf Simulator Sydney <em>· Category demand</em></span>
+      </div>
+      <div class="pbh-chips">
+        <span class="pbh-chip pending">Ad Strength: Pending</span>
+        <span class="pbh-chip">15 Headlines · 4 Descriptions</span>
+        <span class="pbh-chip">Phrase + Exact Match</span>
+      </div>
+    </div>
+    <div class="post-block-body">
+      <p class="lede">Category demand ad group capturing searches for golf simulators and indoor golf in Sydney. Covers the highest commercial search volume in the account - people actively looking for what Nineteenth offers, not yet aware of the brand by name.</p>
+      <div class="field-grid">
+        <div>
+          <div class="field"><div class="k">Ad Strength</div><div class="v"><span class="pill pending">Pending</span></div></div>
+          <div class="field"><div class="k">Pinned H1</div><div class="v"><strong>24/7 Golf Simulator Sydney</strong></div></div>
+          <div class="field"><div class="k">Keywords</div><div class="v">golf simulator sydney · indoor golf sydney · trackman simulator sydney · golf simulator near me · indoor golf near me · golf simulator silverwater · golf simulator parramatta</div></div>
+        </div>
+        <div>
+          <div class="field"><div class="k">Final URL</div><div class="v">nineteenthgc.com/</div></div>
+          <div class="field"><div class="k">Shared assets</div><div class="v">Campaign-level sitelinks, callouts, and call asset</div></div>
+        </div>
+      </div>
+      <div class="callout amber-call">
+        <span class="callout-label">What "Pending" means</span>
+        After any edit to a responsive search ad, Google re-evaluates the ad strength score. During this window - typically minutes to a few hours - the status shows Pending. This is normal and expected. No action required.
+      </div>
+    </div>
+  </div>
+
+  <!-- AG3 -->
+  <div class="post-block">
+    <div class="post-block-head">
+      <div class="pbh-left">
+        <span class="pbh-label">Ad Group 3</span>
+        <span class="pbh-title">Memberships &amp; Bundles <em>· Intent-qualified demand</em></span>
+      </div>
+      <div class="pbh-chips">
+        <span class="pbh-chip pending">Ad Strength: Pending</span>
+        <span class="pbh-chip">15 Headlines · 4 Descriptions</span>
+        <span class="pbh-chip">Phrase + Exact Match</span>
+      </div>
+    </div>
+    <div class="post-block-body">
+      <p class="lede">Membership and bundle ad group capturing the highest-intent searches - people who already know they want ongoing access, not just a one-off booking. These keywords signal purchase intent and are expected to convert at the lowest cost-per-acquisition once the campaign is live.</p>
+      <div class="field-grid">
+        <div>
+          <div class="field"><div class="k">Ad Strength</div><div class="v"><span class="pill pending">Pending</span></div></div>
+          <div class="field"><div class="k">Pinned H1</div><div class="v"><strong>Golf Simulator Membership</strong></div></div>
+          <div class="field"><div class="k">Keywords</div><div class="v">golf simulator membership sydney · indoor golf membership · golf practice membership sydney</div></div>
+        </div>
+        <div>
+          <div class="field"><div class="k">Final URL</div><div class="v">nineteenthgc.com/pricing</div></div>
+          <div class="field"><div class="k">Shared assets</div><div class="v">Campaign-level sitelinks, callouts, and call asset</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaign-level assets -->
+  <div class="post-block">
+    <div class="post-block-head">
+      <div class="pbh-left">
+        <span class="pbh-label">Campaign Level</span>
+        <span class="pbh-title">Shared Assets <em>· Applied to all 3 ad groups</em></span>
+      </div>
+      <div class="pbh-chips">
+        <span class="pbh-chip">4 Sitelinks</span>
+        <span class="pbh-chip">6 Callouts</span>
+        <span class="pbh-chip">Call Asset</span>
+        <span class="pbh-chip">20 Negative Keywords</span>
+      </div>
+    </div>
+    <div class="post-block-body">
+      <div class="field-grid">
+        <div>
+          <div class="field"><div class="k">Sitelinks</div><div class="v">See Pricing (/pricing) · Free Trial (/) · Gallery (/gallery) · Contact Us (/)</div></div>
+          <div class="field"><div class="k">Callouts</div><div class="v">Open 24/7 · Free Parking · Rental Clubs Available · Trackman Technology · Book in 90 Seconds · No Booking Fees</div></div>
+          <div class="field"><div class="k">Call Asset</div><div class="v">02 7245 3898 - attached at campaign level, satisfies Calls validation for all 3 RSAs</div></div>
+        </div>
+        <div>
+          <div class="field"><div class="k">Negative Keywords</div><div class="v">Excludes irrelevant traffic: jobs, careers, ps5, xbox, vr, mini golf, topgolf, second hand, for sale, golf course, driving range, outdoor golf, 9 hole, 18 hole, country club, and others</div></div>
+          <div class="field"><div class="k">Networks</div><div class="v">Search only · Display Network disabled</div></div>
+          <div class="field"><div class="k">Location</div><div class="v">20 km radius around Silverwater NSW · Presence only (not "interested in")</div></div>
+        </div>
+      </div>
+      <div class="callout red-call" style="margin-top:18px;">
+        <span class="callout-label">Why the campaign shows "Not eligible · Campaign is paused"</span>
+        The campaign is paused by design. Running spend before conversion tracking is verified means bookings cannot be attributed and ROI cannot be measured. The campaign will go live once the GA4 link is approved, the conversion action is recording, and the end-to-end test passes.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 03: TRACKING SETUP ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2 class="section-title">Tracking setup: GTM, GA4 &amp; Google Ads</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="post-block">
+    <div class="post-block-head">
+      <div class="pbh-left">
+        <span class="pbh-label">Google Tag Manager</span>
+        <span class="pbh-title">GTM-WND2LDFZ <em>· Version 3 Published</em></span>
+      </div>
+      <div class="pbh-chips">
+        <span class="pbh-chip">Live on Site</span>
+        <span class="pbh-chip">2 Tags Active</span>
+      </div>
+    </div>
+    <div class="post-block-body">
+      <div class="field-grid">
+        <div>
+          <div class="field"><div class="k">Container</div><div class="v">GTM-WND2LDFZ · Version 3 · published and active on nineteenthgc.com</div></div>
+          <div class="field"><div class="k">Tag 1</div><div class="v"><strong>GA4 Configuration</strong><br>Type: Google Tag · Trigger: Initialization - All Pages · Status: <span class="pill live">Live</span></div></div>
+          <div class="field"><div class="k">Tag 2</div><div class="v"><strong>GA4 Booking Confirmed (purchase)</strong><br>Type: GA4 Event · Trigger: Page View - /thank-you · Status: <span class="pill live">Configured</span></div></div>
+        </div>
+        <div>
+          <div class="field"><div class="k">Purchase event</div><div class="v">Event name: <code>purchase</code><br>Parameters: <code>currency = AUD</code> · <code>value = 35</code></div></div>
+          <div class="field"><div class="k">Fires when</div><div class="v">User lands on <code>nineteenthgc.com/thank-you</code>, the post-booking confirmation page</div></div>
+          <div class="field"><div class="k">Note</div><div class="v">Tag is configured correctly but will not fire until the /thank-you page exists on the site. See actions required below.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-block">
+    <div class="post-block-head">
+      <div class="pbh-left">
+        <span class="pbh-label">GA4 + Google Ads Link</span>
+        <span class="pbh-title">Link Request Sent <em>· Awaiting Approval</em></span>
+      </div>
+      <div class="pbh-chips">
+        <span class="pbh-chip pending">Action Required</span>
+        <span class="pbh-chip">12 Jun 2026</span>
+      </div>
+    </div>
+    <div class="post-block-body">
+      <p class="lede">A link request from GA4 property <strong>p529341785</strong> to Google Ads account <strong>638-932-0476</strong> has been sent. It is currently visible in Google Ads → Data Manager → GA4 tab → Received (1), dated 12 June 2026.</p>
+      <div class="field-grid">
+        <div>
+          <div class="field"><div class="k">GA4 Property</div><div class="v">G-04KNNZJ27H / p529341785</div></div>
+          <div class="field"><div class="k">Google Ads account</div><div class="v">638-932-0476</div></div>
+          <div class="field"><div class="k">Link status</div><div class="v"><span class="pill pending">Pending approval</span></div></div>
+        </div>
+        <div>
+          <div class="field"><div class="k">Blocker</div><div class="v">antonio@streetwiseconsultancy.com has <strong>Standard</strong> access. Approving a product link requires <strong>Admin</strong> access</div></div>
+          <div class="field"><div class="k">Where to approve</div><div class="v">Google Ads → Tools → Data Manager → Received tab → Review</div></div>
+          <div class="field"><div class="k">Who must act</div><div class="v">Whoever has Admin access to account 638-932-0476 (the account owner)</div></div>
+        </div>
+      </div>
+      <div class="callout amber-call" style="margin-top:18px;">
+        <span class="callout-label">Why this is blocked</span>
+        Linking GA4 to Google Ads requires Admin-level access to approve. Standard access can view the request but the Review button is inactive. Once the account owner approves, the GA4 purchase event flows into Google Ads and Streetwise can create the conversion action.
+      </div>
+    </div>
+  </div>
+
+  <!-- Full tracking status table -->
+  <div class="notes-card">
+    <p>Full tracking status as of 12 June 2026:</p>
+    <table class="track-table" style="margin-top:14px;">
+      <thead>
+        <tr>
+          <th>System</th>
+          <th>Item</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GTM</td>
+          <td>Container GTM-WND2LDFZ Version 3</td>
+          <td><span class="pill live">Live</span></td>
+          <td>Active on nineteenthgc.com</td>
+        </tr>
+        <tr>
+          <td>GTM</td>
+          <td>GA4 Configuration tag</td>
+          <td><span class="pill live">Live</span></td>
+          <td>Fires on all pages · GA4 collecting page views</td>
+        </tr>
+        <tr>
+          <td>GTM</td>
+          <td>GA4 Booking Confirmed (purchase) tag</td>
+          <td><span class="pill live">Configured</span></td>
+          <td>Fires on /thank-you · currency AUD · value 35. Page must exist first.</td>
+        </tr>
+        <tr>
+          <td>GA4</td>
+          <td>Property G-04KNNZJ27H active</td>
+          <td><span class="pill live">Live</span></td>
+          <td>Collecting page data</td>
+        </tr>
+        <tr>
+          <td>GA4 → Ads</td>
+          <td>Link request sent (12 Jun 2026)</td>
+          <td><span class="pill pending">Pending</span></td>
+          <td>Visible in Google Ads Data Manager → Received (1). Awaiting admin approval.</td>
+        </tr>
+        <tr>
+          <td>Google Ads</td>
+          <td>Conversion action: GA4 Booking Confirmed</td>
+          <td><span class="pill blocked">Not yet created</span></td>
+          <td>Depends on GA4 link approval first</td>
+        </tr>
+        <tr>
+          <td>Site</td>
+          <td>/thank-you confirmation page</td>
+          <td><span class="pill blocked">Not yet created</span></td>
+          <td>Sean must add to Framer: nineteenthgc.com/thank-you</td>
+        </tr>
+        <tr>
+          <td>Site</td>
+          <td>YGB post-booking redirect → /thank-you</td>
+          <td><span class="pill pending">Unconfirmed</span></td>
+          <td>Sean must confirm or set redirect in YGB venue admin</td>
+        </tr>
+        <tr>
+          <td>Google Ads</td>
+          <td>Campaign 23929932123</td>
+          <td><span class="pill paused">Paused</span></td>
+          <td>Intentional - do not unpause until all items above are resolved</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── SECTION 04: ACTIONS REQUIRED ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Actions required before launch</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="intro-card" style="margin-bottom:20px;">
+    <p>Four items are blocking the campaign from going live. Three require action from the client or site builder. One will be completed by Streetwise once the GA4 link is approved. Each item is assigned to a specific owner below.</p>
+  </div>
+
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="action-owner ao-client">Client - Account Owner</div>
+      <h4>Approve the GA4 → Google Ads link</h4>
+      <p>In Google Ads, go to <strong>Tools → Data Manager → Received tab</strong>. There is one pending request from GA4, dated 12 Jun 2026. Click Review and approve it. This requires Admin-level access to account 638-932-0476. Once approved, the GA4 purchase event will flow into Google Ads.</p>
+    </div>
+    <div class="action-card">
+      <div class="action-owner ao-sw">Streetwise - Once Link is Approved</div>
+      <h4>Create the conversion action in Google Ads</h4>
+      <p>After the link is active, Streetwise will go to <strong>Goals → Conversions → Create → Import from Google Analytics 4</strong> and select the purchase event. Conversion action settings: Name: GA4 – Booking Confirmed · Category: Purchase · Value: A$35 · Count: Once.</p>
+    </div>
+    <div class="action-card">
+      <div class="action-owner ao-sean">Sean - Framer Site</div>
+      <h4>Create the /thank-you page on the website</h4>
+      <p>A page needs to exist at <strong>nineteenthgc.com/thank-you</strong>. Content can be simple: "Thanks for your booking, we'll see you on the course." The GTM conversion tag is already configured to fire when any visitor lands on this URL.</p>
+    </div>
+    <div class="action-card">
+      <div class="action-owner ao-sean">Sean - YGB Admin</div>
+      <h4>Set post-booking redirect to /thank-you</h4>
+      <p>After a completed booking in YGB (Your Golf Booking), the venue must redirect the customer to <strong>nineteenthgc.com/thank-you</strong>. Sean needs to confirm or set this redirect in the YGB venue admin settings.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 05: LAUNCH CHECKLIST ── -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2 class="section-title">Pre-launch checklist</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="notes-card">
+    <p>The campaign will be unpaused only after all five steps are confirmed. Steps 1 to 4 depend on the actions above. Step 5 is the final verification Streetwise will run before switching the campaign live.</p>
+    <ul class="launch-steps">
+      <li>
+        <div class="step-num amber">1</div>
+        <div class="step-body">
+          <strong>GA4 → Google Ads link approved</strong>
+          <p>Client approves in Google Ads → Data Manager → Received. Streetwise confirms link shows "Active" status.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num amber">2</div>
+        <div class="step-body">
+          <strong>Google Ads conversion action created and set to recording</strong>
+          <p>Streetwise creates the import from GA4 → purchase event. Conversion action must show "Recording conversions" in the Goals tab before proceeding.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num amber">3</div>
+        <div class="step-body">
+          <strong>/thank-you page live on website</strong>
+          <p>Sean publishes the confirmation page at nineteenthgc.com/thank-you. Page must load successfully in a browser before proceeding.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num amber">4</div>
+        <div class="step-body">
+          <strong>YGB post-booking redirect confirmed</strong>
+          <p>Sean confirms (or sets) the post-booking redirect in YGB venue settings to point to nineteenthgc.com/thank-you.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num grey">5</div>
+        <div class="step-body">
+          <strong>End-to-end tracking test passes</strong>
+          <p>Visit /thank-you → GTM Preview confirms purchase tag fires → GA4 DebugView shows purchase event → Google Ads conversion status shows "Recording conversions". Campaign 23929932123 is then unpaused and goes live.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="doc-footer">
+  Nineteenth Golf Club · Digital Setup Report · 12 June 2026 · Streetwise Consultancy
+</div>
+
+</main>
+
+
+</body>
+</html>
